@@ -11,6 +11,8 @@ public class PlayerInteract : MonoBehaviour
     public bool IsDebug = false;
     public float DebugDelay = 0.1f;
     public Color DebugColor = Color.red;
+
+    private InteractObject hitObj;
     private void Update()
     {
         Ray ray = new Ray(transform.position, transform.forward);
@@ -19,15 +21,26 @@ public class PlayerInteract : MonoBehaviour
         if (IsDebug)
             Debug.DrawRay(ray.origin, ray.direction * RayLength, DebugColor, DebugDelay);
 
-        if (Physics.Raycast(ray, out hit, RayLength))
+        if (Physics.Raycast(ray, out hit, RayLength) && hit.collider.tag == "interact" && hit.collider.GetComponent<InteractObject>().IsCanInteract)
         {
+
+            hitObj = hit.collider.GetComponent<InteractObject>();
+            textUI.text = "[ЛКМ] " + hitObj.TextAction;
             textUI.enabled = true;
-            Debug.Log("Попали в: " + hit.collider.name);
-            Debug.Log("Точка попадания: " + hit.point);
         }
         else
         {
+            hitObj = null;
             textUI.enabled = false;
+        }
+        Click();
+    }
+
+    private void Click()
+    {
+        if (Input.GetMouseButtonDown(0) && hitObj != null)
+        {
+            hitObj.Interact();
         }
     }
 }
