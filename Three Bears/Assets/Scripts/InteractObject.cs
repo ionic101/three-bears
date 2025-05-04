@@ -10,6 +10,6 @@ public class InteractObject : MonoBehaviour
     {
         IsCanInteract = false;
         gameObject.GetComponent<MeshRenderer>().material.color = NewColor;
-        GameManager.CountJokes -= 1;
+        GameManager.CountJokes--;
     }
 }
