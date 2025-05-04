@@ -19,6 +19,7 @@ public class FPSController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cameraRotation = PlayerCamera.transform.rotation.eulerAngles;
     }
 
     void Update()
@@ -35,11 +36,12 @@ public class FPSController : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (transform.forward * curSpeedX) + (transform.right * curSpeedY);
 
-        if (Input.GetButton("Jump") && characterController.isGrounded)
-            moveDirection.y = JumpPower;
-        else
-            moveDirection.y = movementDirectionY;
+        //if (Input.GetButton("Jump") && characterController.isGrounded)
+        //    moveDirection.y = JumpPower;
+        //else
+        //    moveDirection.y = movementDirectionY;
 
+        moveDirection.y = movementDirectionY;
         if (!characterController.isGrounded)
             moveDirection.y -= Gravity * Time.deltaTime;
 
