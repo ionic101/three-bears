@@ -29,7 +29,7 @@ public class FPSController : MonoBehaviour
 
     private void UpdateMoveDirection()
     {
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        bool isRunning = false;
         float curSpeedX = (isRunning ? RunSpeed : WalkSpeed) * Input.GetAxis("Vertical");
         float curSpeedY = (isRunning ? RunSpeed : WalkSpeed) * Input.GetAxis("Horizontal");
         float movementDirectionY = moveDirection.y;

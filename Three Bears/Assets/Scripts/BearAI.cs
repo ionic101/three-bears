@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class BearAI : MonoBehaviour
 {
     public List<Transform> Waypoints;
-    public float VisionRange = 10f;
+    public float VisionRange = 5f;
     public float VisionAngle = 120f;
     public float ChaseSpeed = 5f;
     public float PatrolSpeed = 2f;
@@ -57,8 +57,18 @@ public class BearAI : MonoBehaviour
 
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-        Debug.Log(angleToPlayer);
         if (angleToPlayer > VisionAngle / 2) return false;
+
+        Ray ray = new Ray(player.position, transform.position);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, VisionRange) && hit.collider.tag == "player")
+        {
+            return false;
+        }
+
+        
+
         return true;
     }
 
