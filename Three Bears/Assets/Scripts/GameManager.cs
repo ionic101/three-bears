@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FPSController playerController;
     private void Start()
     {
-        //CountJokes = GameObject.FindGameObjectsWithTag("interact").Length;
-        CountJokes = 2;
+        CountJokes = GameObject.FindGameObjectsWithTag("interact").Length;
         playerController.enabled = true;
         Time.timeScale = 1f;
     }
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
+        FindFirstObjectByType<AudioManager>().Play("bear");
         playerController.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

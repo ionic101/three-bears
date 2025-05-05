@@ -1,15 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractObject : MonoBehaviour
 {
     public string TextAction = "взаимодействовать";
     public bool IsCanInteract = true;
-    public Color NewColor = Color.red;
+    public Material DoneMaterial;
 
     public void Interact()
     {
+        FindFirstObjectByType<AudioManager>().Play("hit");
         IsCanInteract = false;
-        gameObject.GetComponent<MeshRenderer>().material.color = NewColor;
+        var oldMaterials = gameObject.GetComponent<MeshRenderer>().materials;
+
+        Material[] materials = new Material[oldMaterials.Length];
+
+        for (int i = 0; i < materials.Length; i++)
+        {
+            materials[i] = DoneMaterial;
+        }
+
+        gameObject.GetComponent<MeshRenderer>().sharedMaterials = materials;
+
         GameManager.CountJokes--;
     }
 }
